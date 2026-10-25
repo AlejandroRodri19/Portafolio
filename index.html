@@ -1,0 +1,327 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Portafolio personal de Alejandro Josué Rodríguez Gallo, estudiante de Ingeniería de Sistemas de la UNI.">
+    <title>Alejandro Rodríguez — Portafolio</title>
+
+    <!-- Tipografías: Inter (texto), Playfair Display (títulos), JetBrains Mono (etiquetas) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=JetBrains+Mono:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,500;1,400;1,500&display=swap" rel="stylesheet">
+
+    <style>
+        /* ===== Tokens de diseño ===== */
+        :root {
+            --bg: #FAFAFA;
+            --card: #FFFFFF;
+            --fg: #09090B;
+            --muted: #52525B;
+            --soft: #E8ECF0;
+            --border: #E4E4E7;
+            --accent: #2563EB;
+            --ease: cubic-bezier(.22, 1, .36, 1);
+            --serif: "Playfair Display", Georgia, serif;
+            --sans: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+            --mono: "JetBrains Mono", ui-monospace, monospace;
+        }
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            font-family: var(--sans);
+            font-size: 16px;
+            line-height: 1.65;
+            color: var(--fg);
+            background: var(--bg);
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden;
+        }
+        img { display: block; max-width: 100%; }
+        a { color: inherit; text-decoration: none; }
+        ul { list-style: none; }
+        :focus-visible { outline: 2px solid var(--accent); outline-offset: 4px; border-radius: 4px; }
+
+        .contenedor { width: min(1160px, 100% - 48px); margin-inline: auto; }
+        .etiqueta {
+            font-family: var(--mono);
+            font-size: 12px;
+            letter-spacing: .14em;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+
+        /* ===== Barra de progreso ===== */
+        .progreso {
+            position: fixed; inset: 0 0 auto 0; height: 2px;
+            background: var(--accent);
+            transform-origin: left; transform: scaleX(0);
+            z-index: 100;
+        }
+
+        /* ===== Navegación ===== */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+            transition: background .4s var(--ease), border-color .4s var(--ease);
+            border-bottom: 1px solid transparent;
+        }
+        nav.con-fondo {
+            background: rgba(250, 250, 250, .8);
+            backdrop-filter: saturate(180%) blur(14px);
+            -webkit-backdrop-filter: saturate(180%) blur(14px);
+            border-color: var(--border);
+        }
+        nav .contenedor { display: flex; align-items: center; justify-content: space-between; height: 72px; }
+        .logo { font-family: var(--serif); font-size: 22px; font-style: italic; }
+        .logo span { color: var(--accent); font-style: normal; }
+        nav ul { display: flex; gap: 32px; }
+        nav ul a {
+            font-size: 14px; color: var(--muted);
+            position: relative; padding: 6px 0;
+            transition: color .25s var(--ease);
+        }
+        nav ul a::after {
+            content: ""; position: absolute; left: 0; bottom: 0;
+            width: 100%; height: 1px; background: var(--fg);
+            transform: scaleX(0); transform-origin: right;
+            transition: transform .4s var(--ease);
+        }
+        nav ul a:hover { color: var(--fg); }
+        nav ul a:hover::after { transform: scaleX(1); transform-origin: left; }
+
+        .boton {
+            display: inline-flex; align-items: center; gap: 10px;
+            height: 48px; padding: 0 24px;
+            border-radius: 999px;
+            font-size: 15px; font-weight: 500;
+            cursor: pointer;
+            transition: background .3s var(--ease), color .3s var(--ease), border-color .3s var(--ease);
+            will-change: transform;
+        }
+        .boton svg { width: 16px; height: 16px; transition: transform .4s var(--ease); }
+        .boton:hover svg { transform: translateX(4px); }
+        .boton-oscuro { background: var(--fg); color: #fff; }
+        .boton-oscuro:hover { background: var(--accent); }
+        .boton-claro { border: 1px solid var(--border); background: var(--card); }
+        .boton-claro:hover { border-color: var(--fg); }
+        .boton-nav { height: 40px; padding: 0 18px; font-size: 14px; }
+
+        /* ===== Encabezado principal ===== */
+        header { padding: 160px 0 96px; }
+        .hero { display: grid; grid-template-columns: 1.35fr 1fr; gap: 64px; align-items: end; }
+        .estado {
+            display: inline-flex; align-items: center; gap: 10px;
+            padding: 6px 14px 6px 10px;
+            border: 1px solid var(--border); border-radius: 999px;
+            background: var(--card);
+            font-size: 13px; color: var(--muted);
+            margin-bottom: 32px;
+        }
+        .punto { position: relative; width: 8px; height: 8px; border-radius: 50%; background: #16A34A; }
+        .punto::after {
+            content: ""; position: absolute; inset: 0; border-radius: 50%;
+            background: #16A34A; animation: pulso 2s var(--ease) infinite;
+        }
+        @keyframes pulso { 0% { transform: scale(1); opacity: .6; } 100% { transform: scale(3); opacity: 0; } }
+
+        h1 {
+            font-family: var(--serif);
+            font-weight: 400;
+            font-size: clamp(48px, 7.4vw, 104px);
+            line-height: .98;
+            letter-spacing: -.035em;
+            margin-bottom: 28px;
+        }
+        h1 em { font-style: italic; color: var(--accent); }
+        .linea { display: block; overflow: hidden; padding-bottom: .06em; }
+        .hero h2 { font-size: 20px; font-weight: 500; margin-bottom: 8px; }
+        .hero h6 { font-size: 15px; font-weight: 400; color: var(--muted); margin-bottom: 40px; }
+        .acciones { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        .foto { position: relative; }
+        .foto-marco {
+            border-radius: 28px; overflow: hidden;
+            aspect-ratio: 4 / 5;
+            background: var(--soft);
+        }
+        .foto-marco img { width: 100%; height: 100%; object-fit: cover; }
+        .foto-tarjeta {
+            position: absolute; left: -32px; bottom: 32px;
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 16px 20px;
+            box-shadow: 0 20px 40px -20px rgba(9, 9, 11, .18);
+        }
+        .foto-tarjeta strong { display: block; font-size: 15px; font-weight: 600; }
+        .foto-tarjeta span { font-size: 13px; color: var(--muted); }
+
+        /* ===== Cinta de tecnologías ===== */
+        .cinta {
+            border-block: 1px solid var(--border);
+            padding: 22px 0; overflow: hidden;
+            mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+            -webkit-mask-image: linear-gradient(90deg, transparent, #000 10%, #000 90%, transparent);
+        }
+        .cinta-pista { display: flex; gap: 56px; width: max-content; animation: desplazar 32s linear infinite; }
+        .cinta-pista span { font-family: var(--serif); font-size: 28px; font-style: italic; color: var(--muted); white-space: nowrap; }
+        .cinta-pista span::after { content: "✦"; font-style: normal; font-size: 14px; color: var(--accent); margin-left: 56px; vertical-align: middle; }
+        @keyframes desplazar { to { transform: translateX(-50%); } }
+
+        /* ===== Secciones ===== */
+        section { padding: 128px 0; }
+        .cabecera {
+            display: grid; grid-template-columns: 1fr 2fr; gap: 64px;
+            margin-bottom: 64px; align-items: start;
+        }
+        .cabecera h3 {
+            font-family: var(--serif); font-weight: 400;
+            font-size: clamp(36px, 4.6vw, 60px);
+            line-height: 1.05; letter-spacing: -.025em;
+        }
+        .cabecera h3 em { font-style: italic; color: var(--accent); }
+
+        /* Sobre mí */
+        .sobre p { font-size: 21px; line-height: 1.6; color: var(--muted); max-width: 680px; }
+        .sobre p + p { margin-top: 20px; }
+        .sobre p strong { color: var(--fg); font-weight: 500; }
+        .datos { display: grid; grid-template-columns: repeat(3, 1fr); border-top: 1px solid var(--border); margin-top: 56px; }
+        .datos li { padding: 28px 24px 0 0; }
+        .datos li + li { padding-left: 24px; border-left: 1px solid var(--border); }
+        .datos h4 { font-family: var(--serif); font-size: 32px; font-weight: 400; margin-top: 8px; }
+
+        /* Habilidades */
+        .habilidades { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; }
+        .habilidades li {
+            background: var(--card);
+            border: 1px solid var(--border);
+            border-radius: 22px;
+            padding: 28px;
+            min-height: 220px;
+            display: flex; flex-direction: column; justify-content: space-between;
+            transition: transform .5s var(--ease), border-color .3s var(--ease), box-shadow .5s var(--ease);
+        }
+        .habilidades li:hover {
+            transform: translateY(-6px);
+            border-color: #D4D4D8;
+            box-shadow: 0 30px 60px -30px rgba(9, 9, 11, .25);
+        }
+        .icono {
+            width: 48px; height: 48px; border-radius: 14px;
+            display: grid; place-items: center;
+            background: var(--soft);
+            transition: background .3s var(--ease), color .3s var(--ease);
+        }
+        .icono svg { width: 22px; height: 22px; }
+        .habilidades li:hover .icono { background: var(--accent); color: #fff; }
+        .habilidades h4 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+        .habilidades p { font-size: 14px; color: var(--muted); }
+
+        /* Intereses */
+        .intereses { border-top: 1px solid var(--fg); }
+        .intereses li {
+            display: grid; grid-template-columns: 80px 1fr 1fr; gap: 24px; align-items: baseline;
+            padding: 32px 0; border-bottom: 1px solid var(--border);
+            transition: padding .5s var(--ease);
+        }
+        .intereses li:hover { padding-left: 16px; }
+        .intereses .numero { font-family: var(--mono); font-size: 13px; color: var(--muted); }
+        .intereses h4 { font-family: var(--serif); font-size: 34px; font-weight: 400; letter-spacing: -.02em; transition: color .3s var(--ease); }
+        .intereses li:hover h4 { color: var(--accent); font-style: italic; }
+        .intereses p { color: var(--muted); }
+
+        /* Contacto y enlaces */
+        .contacto { background: var(--fg); color: #fff; border-radius: 40px; margin: 0 24px; padding: 128px 0 96px; }
+        .contacto .etiqueta { color: #A1A1AA; }
+        .contacto h3 {
+            font-family: var(--serif); font-weight: 400;
+            font-size: clamp(52px, 9vw, 128px);
+            line-height: .95; letter-spacing: -.04em;
+            margin: 20px 0 72px;
+        }
+        .contacto h3 em { font-style: italic; color: #93C5FD; }
+        .enlaces { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0 48px; }
+        .enlaces a {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 24px 0; border-bottom: 1px solid #27272A;
+            font-size: 18px;
+            transition: color .3s var(--ease), border-color .3s var(--ease);
+        }
+        .enlaces a small { display: block; font-family: var(--mono); font-size: 11px; letter-spacing: .12em; text-transform: uppercase; color: #71717A; margin-bottom: 4px; }
+        .enlaces svg { width: 20px; height: 20px; transition: transform .45s var(--ease); }
+        .enlaces a:hover { color: #93C5FD; border-color: #93C5FD; }
+        .enlaces a:hover svg { transform: translate(4px, -4px) rotate(0deg); }
+
+        footer { padding: 40px 0; }
+        footer .contenedor { display: flex; justify-content: space-between; gap: 16px; flex-wrap: wrap; font-size: 14px; color: var(--muted); }
+
+        /* ===== Responsive ===== */
+        @media (max-width: 960px) {
+            .hero, .cabecera { grid-template-columns: 1fr; gap: 40px; }
+            .foto { max-width: 420px; }
+            .habilidades { grid-template-columns: repeat(2, 1fr); }
+            .enlaces { grid-template-columns: 1fr 1fr; }
+            nav ul { display: none; }
+        }
+        @media (max-width: 600px) {
+            header { padding: 128px 0 64px; }
+            section { padding: 88px 0; }
+            .habilidades, .enlaces, .datos { grid-template-columns: 1fr; }
+            .datos li + li { border-left: 0; padding-left: 0; }
+            .intereses li { grid-template-columns: 48px 1fr; }
+            .intereses p { grid-column: 2; }
+            .foto-tarjeta { left: 16px; }
+            .contacto { margin: 0 12px; border-radius: 28px; }
+        }
+        @media (prefers-reduced-motion: reduce) {
+            html { scroll-behavior: auto; }
+            *, *::before, *::after { animation: none !important; transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="progreso" aria-hidden="true"></div>
+
+    <!-- Navegación -->
+    <nav id="nav">
+        <div class="contenedor">
+            <a href="#inicio" class="logo">Alejandro<span>.</span></a>
+            <ul>
+                <li><a href="#sobre-mi">Sobre mí</a></li>
+                <li><a href="#habilidades">Habilidades</a></li>
+                <li><a href="#intereses">Intereses</a></li>
+            </ul>
+            <a href="#contacto" class="boton boton-oscuro boton-nav magnetico">Contacto</a>
+        </div>
+    </nav>
+
+    <!-- Encabezado principal con el nombre -->
+    <header id="inicio">
+        <div class="contenedor hero">
+            <div>
+                <p class="estado aparecer"><span class="punto"></span>Disponible para proyectos y prácticas</p>
+                <h1 id="titulo">
+                    <span class="linea">Alejandro Josué</span>
+                    <span class="linea"><em>Rodríguez Gallo</em></span>
+                </h1>
+                <h2 class="aparecer">Estudiante de Ingeniería de Sistemas</h2>
+                <h6 class="aparecer">Universidad Nacional de Ingeniería (UNI) · Managua, Nicaragua</h6>
+                <div class="acciones aparecer">
+                    <a href="#habilidades" class="boton boton-oscuro magnetico">
+                        Ver habilidades
+                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+                    </a>
+                    <a href="#contacto" class="boton boton-claro magnetico">Contáctame</a>
+                </div>
+            </div>
+
+            <div class="foto">
+                <div class="foto-marco">
+                    <img src="foto.jpg" alt="Fotografía de Alejandro Josué Rodríguez Gallo" width="800" height="1000">
+                </div>
+                <div class="foto-tarjeta">
+                    <strong>Ingeniería de Sistemas</strong>
+                    <span>UNI · Nicaragua</span>
+                
